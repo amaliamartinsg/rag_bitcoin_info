@@ -212,3 +212,7 @@ __marimo__/
 qdrant_config/config.yaml
 qdrant_data/
 /1-Evaluacion de Modulo de Bases de Datos Vectoriales.pdf
+
+#Process 
+data/info/processed
+data/*.json

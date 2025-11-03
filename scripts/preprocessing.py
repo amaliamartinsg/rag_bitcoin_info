@@ -180,10 +180,6 @@ def process_files():
                 "title": chunk.split('\n')[0][:50],
                 "start": i+1
             })
-        # Guardar el resumen en un JSON
-        summary_path = os.path.join('data', f'{base_name}_summaries.json')
-        with open(summary_path, 'w', encoding='utf-8') as f:
-            json.dump(summary, f, ensure_ascii=False, indent=2)
 
 if __name__ == '__main__':
     process_files()

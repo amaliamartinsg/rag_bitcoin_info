@@ -3,7 +3,9 @@ pdfplumber
 nltk
 langchain
 langchain-community
+langchain-qdrant
 pypdf
 python-dotenv
 uvicorn
 fastapi
+langchain-openai   
