@@ -1,0 +1,9 @@
+python-docx
+pdfplumber
+nltk
+langchain
+langchain-community
+pypdf
+python-dotenv
+uvicorn
+fastapi
