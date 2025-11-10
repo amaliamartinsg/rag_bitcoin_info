@@ -1,13 +1,13 @@
 import json
+import requests
 from datetime import datetime
 from operator import itemgetter
-from aiohttp import request
-from qdrant_client.http import models
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnableLambda, RunnablePassthrough, RunnableBranch
 
 from src.services.llms import llm_langchain
 from src.services.vector_store import qdrant_langchain
+from src.services.current_price_btc import parse_current_price
 from src.processes.langchain_chain.prompts import source_selection_prompt, rag_prompt, none_selection_prompt
 from src.processes.langchain_chain.structures import SourceModel
 
@@ -78,40 +78,6 @@ def get_sources_info(question: str, k: int = None, threshold: float = None) -> l
 
     return docs_filtered
 
-# Función para obtener el precio actual desde un archivo JSON
-def get_current_price():
-    today = datetime.now().strftime("%Y-%m-%d")
-    price_file = f"data/prices/daily_price_{today}.json"
-
-    try:
-        print(f"Intentando leer el archivo: {price_file}")
-        with open(price_file, "r", encoding="utf-8") as f:
-            price_data = json.load(f)
-        print(f"Datos leídos: {price_data}")
-        texto_resumen = """
-            Análisis del mercado de {asset_name} ({symbol})
-
-            A la fecha y hora del último registro ({timestamp_utc}), el precio actual es de {price_current:.2f} USD.
-            En comparación, el precio de apertura de la sesión es de {price_open:.2f} USD y el cierre previo fue de {price_close_prev:.2f} USD.
-
-            Durante la sesión actual, el precio ha marcado un máximo de {price_high:.2f} USD y un mínimo de {price_low:.2f} USD,
-            con un volumen negociado aproximado de {volume} unidades.
-
-            En términos de variación, el precio ha cambiado un {percent_change_daily:.2f}% en las últimas 24 horas,
-            un {percent_change_weekly:.2f}% en la última semana y un {percent_change_monthly:.2f}% en el último mes.
-
-            Desde el punto de vista técnico, se estima una zona de soporte en torno a {support_estimated:.2f} USD
-            y una zona de resistencia cercana a {resistance_estimated:.2f} USD.
-            """.format(**price_data)
-        print("Texto resumen generado:", texto_resumen)
-        return texto_resumen
-    except FileNotFoundError:
-        print("Archivo no encontrado.")
-        return "No se encontró información sobre el precio actual de Bitcoin para hoy."
-    except json.JSONDecodeError as e:
-        print(f"Error al decodificar JSON: {e}")
-        return "Hubo un problema al leer los datos del precio actual."
-
 
 def check_if_source_exists(input_dict):
     if input_dict["source"].selection == 'none':
@@ -122,7 +88,7 @@ rag_with_source_chain = (
     RunnablePassthrough.assign(
         source_context=RunnableLambda(
             lambda input_dict: (
-                get_current_price() if input_dict['source'].selection == 'precio_actual' else
+                parse_current_price() if input_dict['source'].selection == 'precio_actual' else
                 get_sources_info(
                     input_dict['question'],
                     k=input_dict.get('k_docs'),
