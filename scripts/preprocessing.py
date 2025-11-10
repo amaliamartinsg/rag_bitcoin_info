@@ -4,6 +4,7 @@ def clear_processed_dir():
         file_path = os.path.join(PROCESSED_DIR, filename)
         if os.path.isfile(file_path):
             os.remove(file_path)
+#! https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=BTC&to_currency=EUR&apikey=TU_API_KEY
 
 import os
 import glob
@@ -155,10 +156,6 @@ def process_files():
                         "start_page": start_page,
                         "end_page": end_page
                     })
-                # Guardar el resumen en un JSON
-                summary_path = os.path.join('data', f'{base_name}_summaries.json')
-                with open(summary_path, 'w', encoding='utf-8') as f:
-                    json.dump(summary, f, ensure_ascii=False, indent=2)
                 continue
             else:
                 text = extract_text_from_pdf(file_path)

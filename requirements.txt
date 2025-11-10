@@ -5,7 +5,12 @@ langchain
 langchain-community
 langchain-qdrant
 pypdf
+pydantic
 python-dotenv
 uvicorn
 fastapi
-langchain-openai   
+langchain-openai 
+langchain-huggingface
+langchain-core
+qdrant-client
+dotenv

@@ -1,22 +1,16 @@
-
 from typing import Literal
 from pydantic import BaseModel, Field
-from src.processes import summaries
 
-# Crear una descripción para el modelo Pydantic
-categories_description = "\n".join(
-    [f"- {key}: {value}" for key, value in summaries.items()]
-)
-possible_categories = list(summaries.keys())
+# Definimos categorías posibles relacionadas con Bitcoin
+possible_categories = ["precio_actual", "informacion_conceptos"]
 
 class SourceModel(BaseModel):
-    selection: Literal[tuple(possible_categories)] = Field( # type: ignore
+    selection: Literal["precio_actual", "informacion_conceptos"] = Field(
             ...,
-            description=f"Categoriza la pregunta del usuario en una de las siguientes categorías:\n{categories_description}",
-            
+            description="Categoriza la pregunta del usuario en una de las siguientes categorías: precio_actual, informacion_conceptos.",
         )
     reason: str = Field(
             ...,
-            description=f"Razones por las que eliges la seleccion",
+            description="Razones por las que eliges la selección.",
         )
 

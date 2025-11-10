@@ -1,8 +1,9 @@
-from langchain_google_genai import ChatGoogleGenerativeAI
-from google import genai
+from langchain_openai import ChatOpenAI
+from config.project_config import SETTINGS
 
-llm_langchain = ChatGoogleGenerativeAI(
-    model="gemini-2.5-flash-lite",
-    temperature=0,
-    max_retries=3
+
+llm_langchain = ChatOpenAI(
+    model=SETTINGS.llm_model_name,
+    temperature=SETTINGS.temperature,
+    max_retries=SETTINGS.llm_max_retries
 )

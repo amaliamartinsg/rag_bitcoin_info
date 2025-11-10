@@ -1,0 +1,16 @@
+{
+  "symbol": "BTC/USD",
+  "asset_name": "Bitcoin",
+  "timestamp_utc": "2025-11-10T12:00:00Z",
+  "price_current": 35000.00,
+  "price_open": 34400.00,
+  "price_high": 35200.00,
+  "price_low": 34300.00,
+  "price_close_prev": 34500.00,
+  "volume": 45000,
+  "percent_change_daily": 1.45,
+  "percent_change_weekly": 3.5,
+  "percent_change_monthly": 16.7,
+  "support_estimated": 34000.00,
+  "resistance_estimated": 36000.00
+}

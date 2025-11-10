@@ -1,46 +1,42 @@
 from langchain_core.prompts import ChatPromptTemplate, PromptTemplate, SystemMessagePromptTemplate, HumanMessagePromptTemplate
-from src.processes import summaries
 
-content_summaries = '\n'.join([f'{source}: {content}' for source, content in summaries.items()])
+
+# Ajuste de prompts para reflejar las categorías definidas
 
 source_selection_prompt = PromptTemplate.from_template(
-    f'''
-    Eres un sistema experto encargado de seleccionar la mejor fuente conocimiento para responder una pregunta.
-    Aca estan las posibilidades de conocimientos que posees.
-    Si la pregunta no tiene nada que ver con el contenido, responde con la seleccion 'none'
-    {content_summaries}
+    template='''
+    Eres un sistema experto encargado de seleccionar la mejor fuente de conocimiento para responder preguntas relacionadas con Bitcoin.
+    Puedes responder preguntas sobre las siguientes categorías:
+    - precio_actual: Información sobre el precio actual de Bitcoin.
+    - informacion_conceptos: Información sobre los conceptos asociados a Bitcoin.
 
-    '''+\
-    '''
-    Esta es la pregunta para tu seleccion de funete de conocimiento:
+    Esta es la pregunta para tu selección de fuente de conocimiento:
     {question}
     '''
 )
 
 none_selection_prompt = PromptTemplate.from_template(
-    f'''
-    Eres un sistema de chat que unicamente funciona para recordarle al usuario que cosas puede preguntarle una vez este haya hecho preguntas fuera de tu conocimiento.
+    template='''
+    Eres un sistema de chat especializado en Bitcoin. Solo puedes responder preguntas relacionadas con las siguientes categorías:
+    - precio_actual: Información sobre el precio actual de Bitcoin.
+    - informacion_conceptos: Información sobre los conceptos asociados a Bitcoin.
 
-    No respondas ningun tipo de pregunta ni a ningun comentario del usuario, solo recuerdale que solo puedes responder preguntas de lo siguiente:
+    Si la pregunta no está relacionada con estas categorías, responde recordándole al usuario que solo puedes responder preguntas sobre Bitcoin.
 
-    {content_summaries}
-
-    '''+\
-    '''
-    Esta es la pregunta del usuario, aunque la recibas no la respondas:
+    Esta es la pregunta del usuario:
     {question}
     '''
 )
 
-
 rag_prompt = ChatPromptTemplate.from_messages(
-        [
-            SystemMessagePromptTemplate.from_template(
-                "Eres un asistente experto que responde preguntas basándose en el contexto proporcionado.\n"
-                "Contexto:\n{context}",
-            ),
-            HumanMessagePromptTemplate.from_template(
-                "Pregunta: {question}"
-            )
-        ]
-    )
+    [
+        SystemMessagePromptTemplate.from_template(
+            "Eres un asistente experto en Bitcoin que responde preguntas basándose en el contexto proporcionado.\n"
+            "Puedes proporcionar información sobre el precio actual de Bitcoin o su evolución histórica.\n"
+            "Contexto:\n{context}"
+        ),
+        HumanMessagePromptTemplate.from_template(
+            "Pregunta: {question}"
+        )
+    ]
+)

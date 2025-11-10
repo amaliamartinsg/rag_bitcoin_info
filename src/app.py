@@ -25,8 +25,7 @@ app = FastAPI(
 
 @app.get("/")
 async def read_root():
-    return {"message": "Welcome to the RAG and Semantic Search API"}
+    return {"message": "Bienvenido a la API de Búsqueda Semántica y Recuperación de Respuestas (RAG)"}
 
 
-
-app.include_router(langchain_rag_router, prefix="/langchain", tags=["LangChain System"])
+app.include_router(langchain_rag_router, tags=["Bitcoin RAG"])

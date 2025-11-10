@@ -1,5 +1,6 @@
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from config.project_config import SETTINGS
+from langchain_openai import OpenAIEmbeddings
 
-MODEL_NAME = 'models/gemini-embedding-001'
+MODEL_NAME = SETTINGS.embedding_model_name
 
-embeddings_model_langchain = GoogleGenerativeAIEmbeddings(model=MODEL_NAME)
+embeddings_model = OpenAIEmbeddings(model=MODEL_NAME)

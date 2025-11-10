@@ -9,9 +9,16 @@ sys.path.append(BASE_DIR)
 
 from langchain_core.documents import Document
 from langchain_qdrant import QdrantVectorStore
-from qdrant_client.models import VectorParams, Distance
+from qdrant_client.models import Distance, VectorParams
 
 from config.project_config import SETTINGS
+
+qdrant_url = SETTINGS.qdrant_url
+collection_name = SETTINGS.qdrant_collection
+threshold = SETTINGS.threshold
+qdrant_client = SETTINGS.qdrant_client
+k_docs = SETTINGS.k_docs
+
 
 
 def load_txt_chunks_from_processed(processed_dir, source_tag=None):
@@ -66,7 +73,7 @@ def index_documents(documents: List[Document], recreate_collection: bool = False
             pass
         qdrant_client.create_collection(
             collection_name=SETTINGS.qdrant_collection,
-            vectors_config=VectorParams(size=3072, distance=Distance.COSINE),
+            vectors_config=VectorParams(size=SETTINGS.vector_size, distance=Distance.COSINE),
         )
 
     vector_store = QdrantVectorStore(
