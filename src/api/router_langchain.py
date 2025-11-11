@@ -1,6 +1,5 @@
 import os
 import io
-from uuid import uuid4
 from typing import List
 
 from fastapi import APIRouter, UploadFile, File, HTTPException
@@ -9,10 +8,10 @@ from datetime import datetime
 from langchain_core.documents import Document
 from api.schema import RAGRequest, QueryResponse, SourceInfo
 from processes.langchain_chain.chain import rag_chain, get_sources_info
-from services.vector_store import qdrant_langchain
 
 from config.project_config import SETTINGS
-from scripts.create_langchain_index import ingest_initial_documents, ingest_new_documents
+from scripts.create_langchain_index import compute_doc_id
+from scripts.create_langchain_index import compute_doc_id, ingest_initial_documents, ingest_new_documents
 
 
 
@@ -199,14 +198,14 @@ async def ingest_documents(files: List[UploadFile] = File(...)):
             logger.warning(f"No se pudo extraer texto útil del archivo: {f.filename}")
             continue
 
+        doc_id = compute_doc_id(text, f.filename)
         metadata = {
-            "_id": str(uuid4()),
             "_collection_name": collection_name,
-            "source": "info",  # o el tag que quieras usar para documentos manuales
+            "source": "info",
             "filename": f.filename,
             "uploaded_at": datetime.utcnow().isoformat(),
+            "doc_id": doc_id,
         }
-
         documents.append(Document(page_content=text, metadata=metadata))
 
     if not documents:
