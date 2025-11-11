@@ -97,6 +97,51 @@ python src/main.py
 
 La API estará disponible en `http://localhost:8000`.
 
+## Ejecución con Docker Compose
+
+### Requisitos Previos
+
+1. **Docker**: Asegúrate de tener Docker y Docker Compose instalados en tu sistema.
+2. **Archivo de Configuración**: Verifica que los archivos de configuración necesarios (como `config/config.yaml` y `qdrant_config/config.yaml`) estén correctamente configurados.
+
+### Pasos para Ejecutar el Proyecto
+
+1. Construye y levanta los servicios definidos en `docker-compose.yaml`:
+   ```bash
+   docker-compose up --build
+   ```
+
+2. Verifica que los servicios estén corriendo correctamente:
+   ```bash
+   docker ps
+   ```
+
+3. Accede a la API:
+   - La API estará disponible en `http://localhost:8008`.
+   - Qdrant estará disponible en `http://localhost:6333`.
+
+### Servicios Definidos
+
+- **API**: Servicio que expone los endpoints para búsquedas y consultas.
+- **Qdrant**: Base de datos vectorial para almacenamiento y recuperación de embeddings.
+
+### Variables de Entorno
+
+Si necesitas configurar variables de entorno, crea un archivo `.env` en la raíz del proyecto y define las variables necesarias. Por ejemplo:
+```env
+API_PORT=8008
+QDRANT_PORT=6333
+```
+
+Asegúrate de que `docker-compose.yaml` esté configurado para cargar este archivo.
+
+### Detener los Servicios
+
+Para detener los servicios y eliminar los contenedores, ejecuta:
+```bash
+docker-compose down
+```
+
 ## Uso
 
 ### Endpoints Principales
