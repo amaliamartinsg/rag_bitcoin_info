@@ -4,7 +4,6 @@ def clear_processed_dir():
         file_path = os.path.join(PROCESSED_DIR, filename)
         if os.path.isfile(file_path):
             os.remove(file_path)
-#! https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=BTC&to_currency=EUR&apikey=TU_API_KEY
 
 import os
 import glob
