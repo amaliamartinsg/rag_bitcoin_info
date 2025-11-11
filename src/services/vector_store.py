@@ -1,6 +1,6 @@
 from langchain_qdrant import QdrantVectorStore
 from qdrant_client.http.models import Distance, VectorParams
-from src.services.embeddings import embeddings_model
+from src.services.embeddings import embeddings_model, vector_size
 from qdrant_client.http.exceptions import UnexpectedResponse
 from config.project_config import SETTINGS
 
@@ -18,7 +18,7 @@ def create_collection_if_not_exists():
         print(f"Qdrant: colección '{collection_name}' no existe. Creando...")
         qdrant_client.create_collection(
             collection_name=collection_name,
-            vectors_config=VectorParams(size=SETTINGS.vector_size, distance=Distance.COSINE)
+            vectors_config=VectorParams(size=vector_size, distance=Distance.COSINE)
         )
         print(f"Qdrant: colección '{collection_name}' creada.")
 

@@ -13,4 +13,4 @@ langchain-openai
 langchain-huggingface
 langchain-core
 qdrant-client
-dotenv
+python-multipart

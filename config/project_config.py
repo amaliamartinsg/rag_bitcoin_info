@@ -12,7 +12,6 @@ class Settings:
     qdrant_url: str = os.getenv("QDRANT_URL", "http://localhost:6333")
     qdrant_collection: str = os.getenv("QDRANT_COLLECTION", "bitcoin_docs_index")
     persist_db_dir: str = os.getenv("DB_DIR", "src/rag/vector_db")
-    vector_size: int = int(os.getenv("EMBEDDING_DIM", "384"))
 
     # LLM Configuration
     llm_model_name: str = os.getenv("LLM_MODEL", "gpt-4o-mini")
@@ -20,7 +19,7 @@ class Settings:
     llm_max_retries: int = int(os.getenv("LLM_MAX_RETRIES", "3"))
 
     # Embedding Configuration
-    embedding_model_name: str = os.getenv("EMBEDDING_MODEL", "text-embedding-3-large")
+    embedding_model_name: str = os.getenv("EMBEDDING_MODEL", "text-embedding-3-small")
 
     # General Configuration
     threshold: float = float(os.getenv("THRESHOLD", "0.82"))
