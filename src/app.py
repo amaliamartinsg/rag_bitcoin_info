@@ -31,7 +31,7 @@ console_handler.setFormatter(
 )
 
 # Configuración del logger raíz del proyecto
-logger = logging.getLogger("rag-bitcoin")  # logger raíz del proyecto
+logger = logging.getLogger("bitcoin-rag")  # logger raíz del proyecto
 logger.setLevel(logging.INFO)
 logger.addHandler(file_handler)
 logger.addHandler(console_handler)
@@ -60,7 +60,7 @@ async def read_root():
 # Middleware to log requests
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
-    logger = logging.getLogger("rag-bitcoin.api")
+    logger = logging.getLogger("bitcoin-rag.api")
 
     start_time = time.time()
     response = await call_next(request)
