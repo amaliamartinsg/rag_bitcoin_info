@@ -144,8 +144,24 @@ docker-compose down
 ## Uso
 
 ### Endpoints Principales
-- **/search**: Permite realizar búsquedas en el índice vectorial.
-- **/current_price**: Devuelve el precio actual de Bitcoin.
+
+#### **/stats**
+Obtiene estadísticas detalladas de la base de datos vectorial en Qdrant, incluyendo el número de vectores, puntos y segmentos, así como el estado del optimizador y la colección.
+
+#### **/health**
+Verifica el estado de salud de la API y la conexión con la base de datos Qdrant. Devuelve si la base de datos está conectada y si la API está funcionando correctamente.
+
+#### **/rag**
+Realiza consultas de Generación Aumentada por Recuperación (RAG) utilizando LangChain. Devuelve una respuesta generada basada en los documentos más relevantes encontrados en la base de datos vectorial.
+
+#### **/search**
+Permite realizar búsquedas semánticas en el índice vectorial. Devuelve información sobre las fuentes más relevantes relacionadas con la consulta.
+
+#### **/ingest/initial**
+Recrea la colección en Qdrant y reindexa todos los documentos iniciales, incluyendo datos procesados y precios históricos.
+
+#### **/ingest/documents**
+Permite subir y procesar uno o varios documentos en formatos soportados (.txt, .pdf, .docx). Los documentos se añaden a la colección existente en Qdrant sin recrearla.
 
 ### Ejemplo de Búsqueda
 Puedes realizar una búsqueda utilizando herramientas como `curl` o Postman:
