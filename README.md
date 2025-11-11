@@ -95,7 +95,7 @@ Ejecuta el archivo principal para iniciar la API:
 python src/main.py
 ```
 
-La API estará disponible en `http://localhost:8000`.
+La API estará disponible en `http://localhost:8008`.
 
 ## Ejecución con Docker Compose
 
@@ -127,10 +127,9 @@ La API estará disponible en `http://localhost:8000`.
 
 ### Variables de Entorno
 
-Si necesitas configurar variables de entorno, crea un archivo `.env` en la raíz del proyecto y define las variables necesarias. Por ejemplo:
+Si necesitas configurar variables de entorno, crea un archivo `.env` en la raíz del proyecto y define las variables necesarias:
 ```env
-API_PORT=8008
-QDRANT_PORT=6333
+OPENAI_API_KEY=
 ```
 
 Asegúrate de que `docker-compose.yaml` esté configurado para cargar este archivo.
