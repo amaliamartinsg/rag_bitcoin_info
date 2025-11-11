@@ -4,3 +4,4 @@ from langchain_openai import OpenAIEmbeddings
 MODEL_NAME = SETTINGS.embedding_model_name
 
 embeddings_model = OpenAIEmbeddings(model=MODEL_NAME)
+vector_size = len(embeddings_model.embed_query("texto"))
